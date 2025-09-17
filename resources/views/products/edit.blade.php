@@ -10,10 +10,24 @@
         <a class="btn btn-primary btn-sm" href="{{ route('products.index') }}"><i class="fa fa-arrow-left"></i> Back</a>
     </div>
 
-    <form action="{{ route('products.update',$product->id) }}" method="POST">
+    <form action="{{ route('products.update',$product->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
+      
+
+        <div class="mb-3">
+            <label for="inputImage" class="form-label"><strong>Image</strong></label>
+            <input
+                type="file"
+                name="image"
+                class="form-control @error('image') is-invalid @enderror"
+                id="inputImage">
+            <img src = '/images/{{ $product->image }}' width  ="300px">
+            @error('image')
+                <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
         <div class="mb-3">
             <label for="inputName" class="form-label"><strong>Name:</strong></label>
             <input

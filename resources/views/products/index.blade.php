@@ -18,6 +18,7 @@
             <thead>
                 <tr>
                     <th width="80px">No</th>
+                    <th>Image</th>
                     <th>Name</th>
                     <th>Details</th>
                     <th width="250px">Action</th>
@@ -28,6 +29,7 @@
             @forelse ($products as $product)
                 <tr>
                     <td>{{ ++$i }}</td>
+                    <td> <img src = "/images/{{$product ->image}}" width ="100px"></td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->detail }}</td>
                     <td>

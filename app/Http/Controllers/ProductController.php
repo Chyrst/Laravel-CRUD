@@ -7,8 +7,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
-use App\Http\Requests\ProductStoreRequest;
-use App\Http\Requests\ProductUpdateRequest;
 
 class ProductController extends Controller
 {
@@ -27,15 +25,30 @@ class ProductController extends Controller
      */
     public function create():View
     {
-        return view ('Products.create');
+        return view ('products.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProductStoreRequest $request): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
-        Product::create($request->validated());
+        $request-> validate ([
+            'name'=>'required',
+            'detail' => 'required',
+            'image' => 'required|image |mimes: jpeg,png, jpg, svg|max:2048',
+        ]);
+
+        $input = $request -> all();
+
+        if ($image =$request -> file('image')){
+            $destinationPath ='images/';
+            $profileImage =date ('YmdHis') . "." . $image -> getClientOriginalExtension();
+            $image -> move($destinationPath, $profileImage);
+            $input['image'] = "$profileImage";
+        }
+
+        Product::create($input);
 
         return redirect()->route('products.index')
                          ->with('success', 'Product created successfully.');
@@ -60,10 +73,26 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProductUpdateRequest $request, Product $product): RedirectResponse
+    public function update(Request $request, Product $product): RedirectResponse
     {
-        $product->update($request->validated());
+        $request -> validate([
+            'name' => 'required',
+            'detail' => 'required'
+        ]);
 
+        $input = $request->all();
+        
+        if ($image =$request -> file('image')){
+            $destinationPath ='images/';
+            $profileImage =date ('YmdHis') . "." . $image -> getClientOriginalExtension();
+            $image -> move($destinationPath, $profileImage);
+            $input['image'] = "$profileImage";
+        }else{
+            unset ($input ['image']);
+        }
+
+        $product -> update ($input);
+        
         return redirect()->route('products.index')
                         ->with('success','Product updated successfully');
     }
