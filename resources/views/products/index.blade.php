@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="card mt-5">
-  <h2 class="card-header">Laravel 12 CRUD Example from scratch - ItSolutionStuff.com</h2>
+  <h2 class="card-header">Laravel 10 CRUD Example from scratch - ItSolutionStuff.com</h2>
   <div class="card-body">
 
         @session('success')
@@ -30,7 +30,7 @@
             @forelse ($products as $product)
                 <tr>
                     <td>{{ ++$i }}</td>
-                    <td> <img src = "/images/{{$product ->image}}" width ="100px"></td>
+                    <td> <img src="/images/{{$product->image}}" width="100px" class="img-thumbnail open-modal" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="/images/{{$product->image}}">
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->detail }}</td>
                     <td>{{$product ->updated_at-> format ('d M Y');}}</td>
@@ -60,5 +60,22 @@
          {!! $products->links() !!}
 
   </div>
+
 </div>
+
+<!--modal-->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalImage" src="" class="img-fluid" alt="Product Image">
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @endsection
