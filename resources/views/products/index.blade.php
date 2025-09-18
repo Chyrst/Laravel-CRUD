@@ -21,6 +21,7 @@
                     <th>Image</th>
                     <th>Name</th>
                     <th>Details</th>
+                    <th>Updated At</th>
                     <th width="250px">Action</th>
                 </tr>
             </thead>
@@ -32,6 +33,7 @@
                     <td> <img src = "/images/{{$product ->image}}" width ="100px"></td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->detail }}</td>
+                    <td>{{$product ->updated_at-> format ('d M Y');}}</td>
                     <td>
                         <form action="{{ route('products.destroy',$product->id) }}" method="POST">
 

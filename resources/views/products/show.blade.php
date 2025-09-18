@@ -30,6 +30,13 @@
                 <img src = "/images/{{ $product->image }}" width ="500px">
             </div>
         </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12 mt-2">
+            <div class="form-group">
+                <strong>Updated at:</strong> <br/>
+                {{ $product->updated_at-> format('d M Y'); }}
+            </div>
+        </div>
     </div>
 
     
